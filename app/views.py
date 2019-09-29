@@ -43,7 +43,6 @@ def loginUser(request):
         return render(request,'login.html',processData(request,data))
 
 def signup(request):
-    redirect('home')
     data = {'title' : 'Create an account'}
     if(request.method == 'POST'):  
         
@@ -68,14 +67,20 @@ def signup(request):
                 return redirect('signup')
             elif User.objects.filter(email=email).exists():
                 messages.info(request, 'Email already registered.Please login to continue')
-                return redirect('login')
             else:
                 user = User.objects.create_user(username=username,email=email,password=password1,first_name=first_name,last_name=last_name)
                 user.save()
                 print('user crated')
                 messages.info(request, 'Account created successfully. Please login to continue')
-                return redirect('login')
+        return redirect('login')
     else:
+        # check account type, 3 types normal, rider and restaurent owner
+        account_type = request.GET.get('type','normal').lower()
+         
+        if account_type != 'rider' and account_type != 'owner' :
+            account_type = 'normal'
+        
+        data['account_type'] = account_type
         return render(request,'signup.html',processData(request,data))
 
 def specials(request):

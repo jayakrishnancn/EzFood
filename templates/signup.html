@@ -17,6 +17,9 @@
             </div>
             <form class="needs-validation mb-5" novalidate="" action="{% url 'signup' %}" method="post">
              {% csrf_token %}
+             {% if account_type %}
+                <input type='hidden' value="{{account_type}}" name="account_type">
+             {% endif %}
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="firstName">First name</label>
