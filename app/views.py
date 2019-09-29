@@ -120,3 +120,7 @@ def dashboard(request):
     data = {'title' : 'Dashboard'}
     return render(request,'cart.html',processData(request,data))
     
+
+def partnerWithUs(request):
+    data = {'title' : 'Patner with us'}
+    return render(request,'patner/select.html',processData(request,data))

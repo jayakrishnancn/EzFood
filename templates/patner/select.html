@@ -1,0 +1,41 @@
+{% extends 'base.html' %} 
+{% load static%} 
+{% block content %} 
+<div class="main-container text-center mt-5 container">
+    <div class="row">
+        <div class="col-4 mx-auto">
+            <div class="card mb-4 shadow-sm">
+                    <img src="{% static 'images/shipping.svg' %}" class="mx-auto my-5" width="30%"  alt="">
+                <div class="card-body">
+                    <p class="card-text">
+                            Deliver with {{companyName}}<br>
+                            Earn on your own schedule,<br>Become a Delivery Partner
+                    </p>
+                    
+                    <div class="btn-group">
+                        <button type="button" class="btn round btn-sm btn-outline-primary">Create an account</button>
+                        <button type="button" class="btn round btn-sm btn-outline-primary">Login as a rider</button>
+                    </div> 
+                </div>
+            </div>       
+        </div>
+        <div class="col-4 mx-auto"> 
+            <div class="card mb-4 shadow-sm">
+                    <img src="{% static 'images/shop.svg' %}" class="mx-auto my-5" width="30%"  alt="">
+                <div class="card-body">
+                    <p class="card-text">
+                        The fast way to <br>
+                        get food to your customers,<br>
+                        Become a Restaurant Partner
+                    </p>
+                    
+                    <div class="btn-group">
+                        <button type="button" class="btn round btn-sm btn-outline-primary">Create an account</button>
+                        <button type="button" class="btn round btn-sm btn-outline-primary">Login as owner </button>
+                    </div> 
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+{% endblock content %}

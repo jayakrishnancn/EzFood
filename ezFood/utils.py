@@ -15,7 +15,7 @@ def processData(request=None,data=None):
 
 def randomErrorQuotes():
     return random.choice([
-        'We are doing a car.',
-        'Car engine out completely.'
+        'looks like something went wrong on out end. please check after sometime or contact admin ',
+        'something went wrong',
     ])
  

@@ -74,7 +74,10 @@
                 <hr class="mb-4">
  
                 <button class="btn btn-warning rounded-0 btn-lg btn-block" type="submit">Create account</button>
-                <a class="btn btn-link text-right btn-block btn-sm mt-4" href="{% url 'login' %}" role="button">Already have an account? login here</a>
+                <div class="d-flex mt-3">
+                    <a class="mr-auto" href="{% url 'partner_with_us' %}" role="button">Partner with us? Click here</a>
+                    <a class="ml-auto" href="{% url 'login' %}" role="button">Already have an account? login here</a>
+                </div>
             </form>
         </div>
     </div>

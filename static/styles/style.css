@@ -5,4 +5,7 @@
     max-width: 950px !important;
     margin: auto;
 }
+.max-4{
+    max-width: 33.333333%;
+}
 /* static */
