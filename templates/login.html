@@ -55,7 +55,10 @@ body {
 
 <div class="main-container">
 <form class="form-signin" action="{% url 'login' %}" method="post">
-{% csrf_token %}
+  {% csrf_token %}
+  {% if account_type %}
+    <input type='hidden' value="{{account_type}}" name="account_type">
+  {% endif %}
     <a href="{% url 'home' %}">
         <img class="mb-4" src="{% static 'images/' %}{{img.logo}}" alt="" width="72" height="72" />
     </a>

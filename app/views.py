@@ -39,7 +39,14 @@ def loginUser(request):
         messages.error(request,'Invalid credentials')
         return redirect('login')
 
-    else:
+    else: 
+        # check account type, 3 types normal, rider and restaurent owner
+        account_type = request.GET.get('type','normal').lower()
+         
+        if account_type != 'rider' and account_type != 'owner' :
+            account_type = 'normal'
+        
+        data['account_type'] = account_type
         return render(request,'login.html',processData(request,data))
 
 def signup(request):
