@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from ezFood.utils import processData, toId
+from app.cart import addItemToCart
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, auth
@@ -107,10 +108,12 @@ def cart(request):
     
     return render(request,'cart.html',processData(request,data))
 
-def addItemToCart(request):
-    items = request.session.get('items',[])
-    data = {'title' : 'add Item To Cart'}
-    items.append({
+def addToCart(request):
+    if request.method == 'POST':
+        items = request.session.get('items',[])
+        data = {'title' : 'add Item To Cart'}
+
+        items = addItemToCart(items,{
                 'id' : 1,
                 'name':'Burger',
                 'description':'Veg Burger',
@@ -119,10 +122,13 @@ def addItemToCart(request):
                 'quantity':2,
 
                 })
-    request.session['items'] = items        
-    return render(request,'cart.html',processData(request,data))
+        request.session['items'] = items
+        return render(request,'cart.html',processData(request,data))
+    else:
+        return redirect('cart')
 
-def removeItemFromCart(request):
+
+def removeFromCart(request):
     data = {'title' : 'Remove Item From Cart'}
 
     id = toId(request.GET.get('id',-1))
