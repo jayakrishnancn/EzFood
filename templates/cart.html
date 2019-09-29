@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load cart_tags %}
+{% block content %}
+<div class="cart py-5">
+    <div class="container max-900">
+
+    {% if not cartItems  %}
+        <div class="text-center"> 
+        <h5>Your Shopping Cart is empty. Please select atlease one item to proceed. </h5>
+        <div class="my-2 my-md-0 mr-md-3">
+            <a class="p-2 mr-3 text-dark" href="/">Home</a>
+            <a class="p-2 text-dark" href="/specials">Specials</a>
+            <a class="p-2 text-dark" href="/offers">Offers</a> 
+        </div> 
+        </div>
+    {% else %}
+    
+    <div class="row">
+        
+            <div class="col-md-8 order-md-1">
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted">Your cart</span>
+                    <span class="badge badge-secondary badge-pill">{{cartItems | length }}</span>
+                </h4>
+                <ul class="list-group mb-3">
+                   {% for item in cartItems %}
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">{{item.name}}</h6>
+                        <small class="text-muted">{{item.description}}</small>
+                        <h6 class="text-muted">{{item.restaurantName}}</h6>
+                    </div>
+                    <span class="text-muted"><i class="fas fa-rupee-sign"></i> {{item.price}}</span>
+                    </li>
+                     {% endfor %}
+                    
+                </ul>
+            
+            </div>
+        <div class="price-split col-md-4 order-md-2 mb-4">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">PRICE DETAILS</span> 
+            </h4>
+             
+            <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h6 class="my-0">Price ({{cartItems | length }} items)</h6> 
+                </div>
+                <span class="text-muted"><i class="fas fa-rupee-sign"></i> {{ cartItems | calculatePrice:'total' }} </span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h6 class="my-0">Delivery</h6> 
+                </div>
+                <span class="text-muted"><i class="fas fa-rupee-sign"></i> {{ cartItems | calculatePrice:'total_delevery' }} </span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h6 class="my-0">Total Payable</h6> 
+                </div>
+                <span class="text-muted"><i class="fas fa-rupee-sign"></i> {{ cartItems | calculatePrice:'payable' }}</span>
+                </li>
+                
+                <form class="card p-2">
+                        <button type="submit" class="btn round btn-danger">Proceed to checkout</button>
+                </form>
+            </ul> 
+             
+        </div> 
+    </div>
+    {% endif %} 
+</div>
+</div>
+{% endblock content %}

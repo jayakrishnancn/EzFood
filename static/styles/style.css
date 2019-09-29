@@ -1,0 +1,8 @@
+.btn:not(.round){
+    border-radius: 0 !important;
+}
+.max-900{
+    max-width: 950px !important;
+    margin: auto;
+}
+/* static */
