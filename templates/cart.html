@@ -30,7 +30,11 @@
                         <small class="text-muted">{{item.description}}</small>
                         <h6 class="text-muted">{{item.restaurantName}}</h6>
                     </div>
+                    <div>
                     <span class="text-muted"><i class="fas fa-rupee-sign"></i> {{item.price}}</span>
+                     <div><a href="{% url 'remove_item_from_cart' %}?id={{item.id}}" class="badge badge-danger">remove</a></div>
+                    </div>
+                   
                     </li>
                      {% endfor %}
                     

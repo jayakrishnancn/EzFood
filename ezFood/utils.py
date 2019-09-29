@@ -19,3 +19,8 @@ def randomErrorQuotes():
         'something went wrong',
     ])
  
+def toId(id,default=-1):
+    try:
+        return int(id)
+    except:
+        return -1

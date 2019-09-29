@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from ezFood.utils import processData
+from ezFood.utils import processData, toId
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, auth
@@ -108,10 +108,11 @@ def cart(request):
     return render(request,'cart.html',processData(request,data))
 
 def addItemToCart(request):
-    items = request.session.get('items')
+    items = request.session.get('items',[])
     data = {'title' : 'add Item To Cart'}
     items.append({
-                'name':'Burget',
+                'id' : 1,
+                'name':'Burger',
                 'description':'Veg Burger',
                 'restaurantName':'McDonald\'s',
                 'price':233,
@@ -120,6 +121,33 @@ def addItemToCart(request):
                 })
     request.session['items'] = items        
     return render(request,'cart.html',processData(request,data))
+
+def removeItemFromCart(request):
+    data = {'title' : 'Remove Item From Cart'}
+
+    id = toId(request.GET.get('id',-1))
+    if not id:
+        messages.error(request,'Please select an item to remove from cart')
+        return redirect(request.META.get('HTTP_REFERER', 'home'))
+
+
+    items = request.session.get('items',[])
+    itemToRemove = None
+
+    for item in items:
+        if item["id"] == id:
+            itemToRemove = item
+            break
+
+    if not itemToRemove:
+        messages.info(request,'cant find item in cart')
+
+    else:
+        newItems = [i for i in items if not (i['id'] == itemToRemove["id"])]
+        request.session['items'] = newItems   
+        messages.info(request,'removed ' + itemToRemove["name"] + ' from cart')
+
+    return redirect(request.META.get('HTTP_REFERER', 'home'))
 
 @login_required
 def profile(request):

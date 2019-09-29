@@ -11,6 +11,7 @@ urlpatterns = [
     path('support', views.support, name='support' ),
     path('cart', views.cart, name='cart' ),
     path('addItemToCart', views.addItemToCart, name='addItemToCart' ),
+    path('remove-item-from-cart', views.removeItemFromCart, name='remove_item_from_cart' ),
     path('profile', views.profile, name='profile' ),
     path('dashboard', views.dashboard, name='dashboard' ),
     path('partner-with-us', views.partnerWithUs, name='partner_with_us' ),
