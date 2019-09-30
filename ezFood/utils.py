@@ -1,4 +1,6 @@
 import random 
+from django.shortcuts import render, redirect as re
+
 def processData(request=None,data=None):
     img = {
         'logo' : 'logo.svg'
@@ -24,3 +26,22 @@ def toId(id,default=-1):
         return int(id)
     except:
         return -1
+
+def getRole(request,method=None):
+    if not method:
+        method = request.method
+
+    if type(request) == str:
+        value = request
+    elif method.upper() == 'POST':
+        value = request.POST.get('role','normal')
+    elif method.upper() == 'GET':
+        value = request.GET.get('role','normal')
+    else:
+        return 'normal'
+
+    role = value.lower()
+    if role in  ('rider', 'owner' ) :
+        return role
+    return 'normal'
+ 

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from ezFood.utils import processData, toId
+from ezFood.utils import processData, toId, getRole
 from app.cart import addItemToCart
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -42,12 +42,8 @@ def loginUser(request):
 
     else: 
         # check account type, 3 types normal, rider and restaurent owner
-        account_type = request.GET.get('type','normal').lower()
-         
-        if account_type != 'rider' and account_type != 'owner' :
-            account_type = 'normal'
         
-        data['account_type'] = account_type
+        data['role'] = getRole(request)
         return render(request,'login.html',processData(request,data))
 
 def signup(request):
@@ -77,18 +73,20 @@ def signup(request):
                 messages.info(request, 'Email already registered.Please login to continue')
             else:
                 user = User.objects.create_user(username=username,email=email,password=password1,first_name=first_name,last_name=last_name)
+                user.profile.role = getRole(request)
                 user.save()
+
                 print('user crated')
                 messages.info(request, 'Account created successfully. Please login to continue')
         return redirect('login')
     else:
         # check account type, 3 types normal, rider and restaurent owner
-        account_type = request.GET.get('type','normal').lower()
+        role = request.GET.get('type','normal').lower()
          
-        if account_type != 'rider' and account_type != 'owner' :
-            account_type = 'normal'
+        if role != 'rider' and role != 'owner' :
+            role = 'normal'
         
-        data['account_type'] = account_type
+        data['role'] = role
         return render(request,'signup.html',processData(request,data))
 
 def specials(request):
