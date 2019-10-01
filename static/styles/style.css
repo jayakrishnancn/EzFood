@@ -1,5 +1,8 @@
-.btn:not(.round){
+.no-round{
     border-radius: 0 !important;
+}
+.badge{
+    border-radius: 3px;
 }
 .max-900{
     max-width: 950px !important;
