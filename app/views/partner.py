@@ -8,4 +8,7 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def restaurantDetails(request):
     data = {'title': 'My Restaurant Details'}
+    if request.method == "POST":
+        messages.error(request,"cant save. please try again or conact admin")
+        return redirect('restaurant_details')
     return render(request,'partner/owner/restaurant_details.html',processData(request,data))
