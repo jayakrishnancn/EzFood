@@ -162,9 +162,9 @@ def profile(request):
 def dashboard(request):
      
     data = {'title' : 'Dashboard'}
-    return render(request,'cart.html',processData(request,data))
+    return render(request,'user/profile.html',processData(request,data))
     
 
 def partnerWithUs(request):
-    data = {'title' : 'Patner with us'}
-    return render(request,'patner/select.html',processData(request,data))
+    data = {'title' : 'Partner with us'}
+    return render(request,'partner/select.html',processData(request,data))
