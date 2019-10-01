@@ -3,13 +3,17 @@
     <div class="container mt-4">
         <div class="row">
             <div class="col-4">
-                {% include 'user/sidebar.html' %}
+                {% block sidebar %}
+                    {% include 'user/sidebar.html' %}
+                {% endblock sidebar %}
             </div>
             <div class="col-8">
                 <div class="card"> 
-                 <div class="card-body">
-                    Featured
-                </div>
+                    <div class="card-body">
+                        {% block dashboardContent %}
+                                Featured
+                        {% endblock dashboardContent %}
+                    </div>
                 </div>
             </div>
         </div>

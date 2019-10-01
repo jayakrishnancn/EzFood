@@ -15,4 +15,6 @@ urlpatterns = [
     path('profile', views.profile, name='profile' ),
     path('dashboard', views.dashboard, name='dashboard' ),
     path('partner-with-us', views.partnerWithUs, name='partner_with_us' ),
+
+    path('restaurant-details', views.restaurantDetails, name='restaurant_details' ),
 ]
