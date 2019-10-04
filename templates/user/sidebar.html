@@ -13,10 +13,10 @@
   <a href="{% url 'restaurant_details'%}" class="list-group-item list-group-item-action">
    Restaurent Details
   </a>
-  <a href="{% url 'profile'%}" class="list-group-item list-group-item-action">Add menu</a>
-  <a href="{% url 'profile'%}" class="list-group-item list-group-item-action">Edit Menu</a>
-  <a href="{% url 'profile'%}" class="list-group-item list-group-item-action">Total Revinue</a>
-  <a href="{% url 'profile'%}" class="list-group-item list-group-item-action">Order History</a>
+  <a href="{% url 'add_menu'%}" class="list-group-item list-group-item-action">Add menu</a>
+  <a href="{% url 'add_menu'%}" class="list-group-item list-group-item-action">Edit Menu</a>
+  <a href="{% url 'revenue'%}" class="list-group-item list-group-item-action">Total revenue</a>
+  <a href="{% url 'order_history'%}" class="list-group-item list-group-item-action">Order History</a>
 </div>
 {% elif user.profile.role == 'rider'%}
 {% else %}

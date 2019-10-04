@@ -17,4 +17,7 @@ urlpatterns = [
     path('partner-with-us', views.partnerWithUs, name='partner_with_us' ),
 
     path('restaurant-details', views.restaurantDetails, name='restaurant_details' ),
+    path('add-menu', views.addMenu, name='add_menu' ),
+    path('revenue', views.revenue, name='revenue' ),
+    path('order-history', views.orderHistory, name='order_history' ),
 ]
