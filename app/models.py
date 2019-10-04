@@ -10,17 +10,23 @@ class Profile(models.Model):
     role = models.CharField(max_length=20,default="normal")
 
     def __str__(self):
-        return self.user.username
+        return self.role
 
 
 class Restaurant(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length = 100,default="ez Food Restaurant")
+    name = models.CharField(max_length = 100)
+    address1 = models.CharField(max_length=100,default='')
+    address2 = models.CharField(max_length=100,default='')
+    country = models.CharField(max_length=100,default='')
+    state = models.CharField(max_length=100,default='')
+    zip = models.CharField(max_length=100,default='')
     location = models.CharField(max_length = 100,default="India")
+    tag = models.CharField(max_length=100,default='')
     
     def __str__(self):
-        return self.user.username
+        return self.name
 
     @classmethod
     def create(cls, name,location):
