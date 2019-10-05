@@ -1,7 +1,7 @@
 
 {% extends 'user/profile.html' %}
 {% block dashboardContent %}
-<form class="needs-validation" novalidate="" method="post" action="{% url 'add_menu'  %}">
+<form class="needs-validation" novalidate="" method="post" action="{% url 'add_menu'  %}" enctype="multipart/form-data">
     {% csrf_token %}
         <input type="hidden" name="id" value="{{menuItem.id}}" >
         <div class="row">
@@ -17,8 +17,9 @@
         <div class="row">
           <div class="col-md-12 mb-3">
             <div class="custom-file">
-                  <label class="custom-file-label" for="inputGroupFile04">Choose Image</label>
-              <input type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+              <label class="" for="inputGroupFile04">Choose Image of food</label>
+              <br>
+              <input type="file" class="" name="image" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
         
             </div>
           </div>

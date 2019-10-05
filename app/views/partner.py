@@ -107,7 +107,7 @@ def addMenu(request):
         id = request.POST.get('id')
         name = request.POST.get('name')
         price = request.POST.get('price')
-
+        image =request.FILES.get('image')
         if not (name  and price ):
             messages.error(request,'please specify name of dish')
             return redirect('add_menu')
@@ -117,10 +117,11 @@ def addMenu(request):
                 print('updating menu item')
                 menuItem = MenuItem.objects.filter(user=request.user,id=id).first()
                 menuItem.price = price
+                menuItem.image = image
                 menuItem.save()
                 messages.info(request,'updated price for item ' + name)                
             else :
-                menuItem = MenuItem.objects.create(user=request.user,name=name,price=price)
+                menuItem = MenuItem.objects.create(user=request.user,name=name,price=price,image=image)
                 messages.info(request,'crated new Menu item')
 
         except Exception as e:

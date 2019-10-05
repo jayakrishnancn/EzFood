@@ -4,7 +4,11 @@
 <form class="needs-validation" class="text-center" method="post" action="{% url 'delete_menu'  %}">
     {% csrf_token %}
       <div class="card mb-4 shadow-sm mx-auto" style="width: 18rem;">
-        <img src="{% static 'images/' %}{{item.image}}" class="card-img-top" alt="image">
+        {% if item.image and item.image.url %}
+            <img src="{{item.image.url}}" class="card-img-top" alt="image">
+        {% else %}
+            <img src="/media/default.svg" class="card-img-top" alt="image">
+        {% endif %}
         <div class="card-body">
             <h5 class="card-title">Delete Item</h5>
             <p class="card-text"> Please Confirm deletion of {{item.name}} with price {{item.price}} </p>

@@ -29,7 +29,11 @@
                 <th class="align-middle">{{forloop.counter}}</th>
                 <td class="align-middle">{{item.name}}</td>
                 <td class="align-middle">Rs. {{item.price}} /- </td>
-                <td class="align-middle text-center"><img class="img-fluid img-thumbnail" src="{% static 'images/' %}{{item.image}}" ></td>
+                {% if item.image %}
+                    <td class="align-middle text-center"><img class="img-fluid img-thumbnail" src="{{item.image.url}}" ></td>
+                {% else %}
+                    <td class="align-middle text-center"><img class="img-fluid img-thumbnail" src="/media/default.svg" ></td>
+                {% endif %}
                 <td class="align-middle text-center">
                     <a class="btn btn-warning" href="{% url 'add_menu' %}?id={{item.id}}"> Edit </a> 
                     <a class="btn btn-link" href="{% url 'delete_menu' %}?id={{item.id}}"> Delete </a>
