@@ -8,13 +8,15 @@
                 {% endblock sidebar %}
             </div>
             <div class="col-8">
-                <div class="card"> 
-                    <div class="card-body">
-                        {% block dashboardContent %}
-                                Featured
-                        {% endblock dashboardContent %}
+                {% block dashboardContent_parent%}
+                    <div class="card"> 
+                        <div class="card-body">
+                            {% block dashboardContent %}
+                                    Featured
+                            {% endblock dashboardContent %}
+                        </div>
                     </div>
-                </div>
+                {% endblock dashboardContent_parent %}
             </div>
         </div>
     </div>

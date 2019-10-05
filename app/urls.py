@@ -18,6 +18,8 @@ urlpatterns = [
 
     path('restaurant-details', views.restaurantDetails, name='restaurant_details' ),
     path('add-menu', views.addMenu, name='add_menu' ),
+    path('view-menu', views.viewMenu, name='view_menu' ),
+    path('delete-menu', views.deleteMenu, name='delete_menu' ),
     path('revenue', views.revenue, name='revenue' ),
     path('order-history', views.orderHistory, name='order_history' ),
 ]

@@ -5,7 +5,7 @@ from ezFood.utils import processData, toId, getRole
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from app.models import Restaurant
+from app.models import Restaurant, MenuItem
 
 # Create your views here 
 @login_required
@@ -51,11 +51,89 @@ def restaurantDetails(request):
     return render(request,'partner/owner/restaurant_details.html',processData(request,data))
 
 @login_required
+def viewMenu(request):
+    data = {'title': 'view Menu for my restaurant'}
+    data['menuItems'] = MenuItem.objects.filter(user=request.user)
+    return render(request,'partner/owner/view_menu.html',processData(request,data))
+
+
+@login_required
+def deleteMenu(request):
+    data = {'title': 'Delete item from Menu'}
+ 
+    if request.method == 'POST':
+        confirmed = request.POST.get('confirm','no')
+        id = request.POST.get('id')
+
+        if not id:
+            messages.error(request,'please select item from menu to delete')
+            return redirect('view_menu')
+
+        if confirmed and confirmed.lower() == 'yes':
+            try:
+                itemToDelete  = MenuItem.objects.filter(user=request.user,id=id).first()
+                itemToDelete.delete()
+                messages.error(request,itemToDelete.name + ' deleted from Menu')
+                return redirect('view_menu')
+            except Exception as e:
+                print(e)
+                messages.error(request,'cant delete item with id' + str(id))
+                return redirect('view_menu')
+
+        else:
+            messages.error(request,'please click "yes" to confirm and delete')
+            return redirect('view_menu')
+
+    
+    id = request.GET.get('id')
+
+    if not id :
+        messages.error(request,'please select id to delete ')
+        return redirect('view_menu')
+
+    if MenuItem.objects.filter(user=request.user,id=id).count() !=  1:
+        messages.error(request,'Cant find item from menu to delete')
+        return redirect('view_menu')
+
+    data['item'] = MenuItem.objects.filter(user=request.user,id=id).first()
+    return render(request,'partner/owner/confirm_delete_item.html',processData(request,data))
+
+    
+@login_required
 def addMenu(request):
     data = {'title': 'Add Items to Menu for my restaurant'}
     if request.method == "POST":
-        messages.error(request,"cant save. please try again or conact admin")
-        return redirect('add_menu')
+
+        id = request.POST.get('id')
+        name = request.POST.get('name')
+        price = request.POST.get('price')
+
+        if not (name  and price ):
+            messages.error(request,'please specify name of dish')
+            return redirect('add_menu')
+
+        try:
+            if id:
+                print('updating menu item')
+                menuItem = MenuItem.objects.filter(user=request.user,id=id).first()
+                menuItem.price = price
+                menuItem.save()
+                messages.info(request,'updated price for item ' + name)                
+            else :
+                menuItem = MenuItem.objects.create(user=request.user,name=name,price=price)
+                messages.info(request,'crated new Menu item')
+
+        except Exception as e:
+            messages.error(request,'an error occured try again')
+            print(e)
+            return redirect('add_menu')
+
+        return redirect('view_menu')
+
+    itemId = request.GET.get('id')
+    if itemId:
+        data['menuItem'] = MenuItem.objects.filter(id=itemId).first()
+
     return render(request,'partner/owner/add_menu.html',processData(request,data))
 
 @login_required

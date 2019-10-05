@@ -12,6 +12,14 @@ class Profile(models.Model):
     def __str__(self):
         return self.role
 
+class MenuItem(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    name = models.CharField(max_length = 100)
+    price = models.IntegerField(default=100)
+    image = models.ImageField(upload_to="upload",default='default.svg')
+
+    def __str__(self):
+        return self.user.username + " - " + self.name + " : " + str(self.price) 
 
 class Restaurant(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)

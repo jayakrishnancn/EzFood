@@ -1,0 +1,42 @@
+{% extends 'user/profile.html' %}
+{% load static %}
+{% block style %}
+.img-fluid{
+    max-width: 100px;
+    height: auto;
+    max-height: 100px
+}
+{% endblock style %}
+{% block dashboardContent %}
+<table class="table table-bordered">
+  <thead>
+    <tr class="">
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+      <th scope="col" class="text-center">Image</th>
+      <th scope="col" class="text-center">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if  not menuItems %}
+        <tr>
+            <td  colspan="5" class="text-center">No items found. Plase add items to menu </td>
+        <tr>
+    {% else %}
+        {% for item in menuItems %}    
+            <tr>
+                <th class="align-middle">{{forloop.counter}}</th>
+                <td class="align-middle">{{item.name}}</td>
+                <td class="align-middle">Rs. {{item.price}} /- </td>
+                <td class="align-middle text-center"><img class="img-fluid img-thumbnail" src="{% static 'images/' %}{{item.image}}" ></td>
+                <td class="align-middle text-center">
+                    <a class="btn btn-warning" href="{% url 'add_menu' %}?id={{item.id}}"> Edit </a> 
+                    <a class="btn btn-link" href="{% url 'delete_menu' %}?id={{item.id}}"> Delete </a>
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+  </tbody>
+</table>
+{% endblock dashboardContent %}
