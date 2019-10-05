@@ -17,9 +17,10 @@ class MenuItem(models.Model):
     name = models.CharField(max_length = 100)
     price = models.IntegerField(default=100)
     image = models.ImageField(upload_to="upload",default='default.svg')
+    active = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.user.username + " - " + self.name + " : " + str(self.price) 
+        return self.user.username + " - " + self.name + " : " + str(self.price) + " : " + str(self.active)
 
 class Restaurant(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)

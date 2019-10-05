@@ -6,11 +6,16 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from app.models import Restaurant, MenuItem
 
 # Create your views here 
 
 def home(request):
     data = {'title': 'Welcome to ezFood'}
+    items = MenuItem.objects.filter(active=True)
+    if items and items.count() > 0 :
+        data['menuItems'] = MenuItem.objects.filter(active=True)
+    
     return render(request,'index.html',processData(request,data))
 
 def logoutUser(request):
