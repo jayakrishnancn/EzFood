@@ -9,8 +9,8 @@
             <input type="text" class="form-control" id="name" name="name" placeholder="Hotel xyz" value="{{rest.name}}" required="">
           </div>
           <div class="col-md-6 mb-3">
-            <label for="tag">Tag</label>
-            <input type="text" class="form-control" name="tag" id="tag" placeholder="Best hotel in the world" value="{{rest.tag}}" required="">
+            <label for="location">Location</label>
+            <input type="text" class="form-control" name="location" id="location" placeholder="eg. pala" value="{{rest.location}}" required="">
           </div>
         </div>
 
@@ -32,8 +32,7 @@
           <div class="col-md-5 mb-3">
             <label for="country">Country</label>
             <select class="custom-select d-block w-100" id="country" required="" name="country">
-              <option value="">Choose...</option>
-              <option>United States</option>
+              <option selected>India</option>
             </select>
             <div class="invalid-feedback">
               Please select a valid country.
@@ -43,7 +42,7 @@
             <label for="state">State</label>
             <select class="custom-select d-block w-100" id="state" required="" name="state">
               <option value="">Choose...</option>
-              <option>California</option>
+              <option selected>Kerala</option>
             </select>
             <div class="invalid-feedback">
               Please provide a valid state.

@@ -1,3 +1,4 @@
+from django.db.utils import IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from ezFood.utils import processData, toId, getRole
@@ -10,6 +11,7 @@ from app.models import Restaurant
 @login_required
 def restaurantDetails(request):
     data = {'title': 'My Restaurant Details'}
+    print("one")
     if request.method == "POST":
         name = request.POST.get('name')
         address1 = request.POST.get('address1','')
@@ -17,25 +19,33 @@ def restaurantDetails(request):
         country = request.POST.get('country','India')
         state = request.POST.get('state','')
         zip = request.POST.get('zip','')
-        location = request.POST.get('location','India')
+        location = request.POST.get('location','pala')
         tag = request.POST.get('tag','')
-        ## ah  
-        if name:
-            rest  = Restaurant(user=request.user,name = name,address1 = address1,address2 = address2,country = country,state = state,zip = zip,location = location,tag = tag)
-            rest.save()
-            print(rest.user)
-            print(rest.name)
-            print(rest.location)
-            print('saved')
-            messages.info(request,'saved restaurant details')
-        else:
+        if not name: 
             messages.error(request,'cant save restaurant details')
+            return redirect('restaurant_details')
+        rest = Restaurant()
+        try:
+            rest = Restaurant.objects.create(user=request.user,name = name,address1 = address1,address2 = address2,country = country,state = state,zip = zip,location = location,tag = tag)
+            messages.info(request,'saved restaurant details')
 
+        except IntegrityError:
+            rest = Restaurant.objects.get(user=request.user)
+            rest.name = name
+            rest.address1 = address1
+            rest.address2 = address2
+            rest.country = country
+            rest.state = state
+            rest.zip = zip
+            rest.location = location
+            rest.tag = tag
+            rest.save()
+            messages.info(request,'updated restaurant details.')
+        except:
+            messages.info(request,'cant save restaurant details. try again')
+            
         return redirect('restaurant_details')
-        
-        messages.error(request,"cant save. please try again or conact admin")
-        return redirect('restaurant_details')
-
+ 
     data['rest'] = Restaurant.objects.filter(user=request.user).order_by('id').first()
     print(data['rest'])
     return render(request,'partner/owner/restaurant_details.html',processData(request,data))

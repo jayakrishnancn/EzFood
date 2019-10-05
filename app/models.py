@@ -14,7 +14,7 @@ class Profile(models.Model):
 
 
 class Restaurant(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length = 100)
     address1 = models.CharField(max_length=100,default='')
