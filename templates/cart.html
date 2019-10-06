@@ -67,7 +67,8 @@
                 <span class="text-muted"><i class="fas fa-rupee-sign"></i> {{ cartItems | calculatePrice:'payable' }}</span>
                 </li>
                 
-                <form class="card p-2">
+                <form class="card p-2" action="{% url 'checkout' %}" method="post">
+                {% csrf_token %}
                         <button type="submit" class="btn round btn-danger">Proceed to checkout</button>
                 </form>
             </ul> 

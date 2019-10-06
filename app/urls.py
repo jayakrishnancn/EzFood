@@ -24,4 +24,6 @@ urlpatterns = [
     path('delete-menu', views.deleteMenu, name='delete_menu' ),
     path('revenue', views.revenue, name='revenue' ),
     path('order-history', views.orderHistory, name='order_history' ),
+    
+    path('checkout', views.checkout, name='checkout' ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

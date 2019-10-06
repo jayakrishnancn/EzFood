@@ -46,11 +46,11 @@
     {% endif %}
    
 
-    </nav>
-    <div class="btn-group" role="group">          
-      <a class="btn btn-warning round" href="{% url 'cart' %}">Cart <i class="fas fa-shopping-cart"></i></a>
-      <a class="btn btn-dark round" href="#"> {{ cartItems | calculateTotalQuantity }} </a> 
-    </div>
+    </nav>      
+      <div class="btn-group" role="group">          
+        <a class="btn btn-warning round" href="{% url 'cart' %}">Cart <i class="fas fa-shopping-cart"></i></a>
+        <a class="btn btn-dark round" href="{% url 'cart' %}"> {{ cartItems | calculateTotalQuantity }} </a> 
+      </div>
     </div>
     </div>
     {% endblock %}
