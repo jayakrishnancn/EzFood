@@ -117,7 +117,8 @@ def addMenu(request):
                 print('updating menu item')
                 menuItem = MenuItem.objects.filter(user=request.user,id=id).first()
                 menuItem.price = price
-                menuItem.image = image
+                if image:
+                    menuItem.image.save(image.name, image)
                 menuItem.save()
                 messages.info(request,'updated price for item ' + name)                
             else :

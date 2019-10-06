@@ -11,15 +11,20 @@
         {% for item in menuItems %} 
         <div class="col-md-4">
             <div class="card mb-3 shadow-sm">
+                {% if  item.image %}
                 <div class="d-block img-fixed" style="background:url('{{item.image.url}}');background-size:cover">&nbsp;</div>
+                {% else %}
+                <div class="d-block img-fixed" style="background:url('/media/default.svg');background-size:cover">&nbsp;</div>
+                {% endif %}
             <div class="card-body">
-                <p class="card-text">{{item.name}}</p>
-
+                <p class="card-text">{{item.name | title}}</p>
+                <p class="text-secondary">{{item.user.restaurant.name | title}}</p>
                 <div class="d-flex justify-content-between align-items-center">
+                <div class="p-2 badge badge-dark">{{item.price}} <i class="fas fa-rupee-sign"></i></div>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-dark">View</button>
                     <a href="{% url 'addItemToCart' %}?id={{item.id}}" class="btn btn-sm btn-warning">Add To Cart</a>
                 </div>
+                
                 </div>
             </div>
             </div>

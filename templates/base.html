@@ -1,4 +1,5 @@
 {% load static%}
+{% load cart_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,7 +49,7 @@
     </nav>
     <div class="btn-group" role="group">          
       <a class="btn btn-warning round" href="{% url 'cart' %}">Cart <i class="fas fa-shopping-cart"></i></a>
-      <a class="btn btn-dark round" href="#"> {{ cartItems | length }} </a> 
+      <a class="btn btn-dark round" href="#"> {{ cartItems | calculateTotalQuantity }} </a> 
     </div>
     </div>
     </div>
@@ -58,7 +59,7 @@
   <div class="alert rounded-0 alert-warning" role="alert">
      <div class="max-900">
         {% for message in messages %}
-         <div>{{ message }}</div>
+         <div>{{ message | capfirst }}</div>
         {% endfor %} 
       </div>
   </div>

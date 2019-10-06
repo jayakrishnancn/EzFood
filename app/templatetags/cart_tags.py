@@ -7,14 +7,28 @@ def calculatePrice(items,output='total'):
     priceDetails = {}
      
     total_price = 0
+
     for item in items:
-        total_price = total_price + item['price'] 
+        if not item['quantity']:
+            item['quantity'] = 1
+        total_price = total_price + item['price'] * item['quantity'] 
     
     total_delevery = total_price*0.08
+
     grad_total = total_price + total_delevery
 
-    priceDetails['payable'] = grad_total
-    priceDetails['total_delevery'] = total_delevery
-    priceDetails['total'] = total_price
+    priceDetails['payable'] = round(grad_total,2)
+    priceDetails['total_delevery'] = round(total_delevery,2)
+    priceDetails['total'] = round(total_price,2)
 
     return priceDetails[output]
+
+@register.filter
+def calculateTotalQuantity(items):
+    total = 0
+    for item in items:
+        if not item['quantity']:
+            item['quantity'] = 1
+        total = total + item['quantity']
+
+    return total

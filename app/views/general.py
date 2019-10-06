@@ -14,7 +14,7 @@ def home(request):
     data = {'title': 'Welcome to ezFood'}
     items = MenuItem.objects.filter(active=True)
     if items and items.count() > 0 :
-        data['menuItems'] = MenuItem.objects.filter(active=True)
+        data['menuItems'] = items
     
     return render(request,'index.html',processData(request,data))
 
@@ -40,7 +40,12 @@ def loginUser(request):
             if user.is_active:
                 login(request, user)
                 print('user logged in') 
-                return redirect('dashboard')
+                nextUrl = request.POST.get('next')
+                print(nextUrl)
+                if not nextUrl:
+                    nextUrl = 'dashboard'
+
+                return redirect(nextUrl)
 
         messages.error(request,'Invalid credentials')
         return redirect('login')
@@ -111,24 +116,34 @@ def cart(request):
     
     return render(request,'cart.html',processData(request,data))
 
+
+@login_required
 def addToCart(request):
-    if request.method == 'POST':
-        items = request.session.get('items',[])
-        data = {'title' : 'add Item To Cart'}
+    id = request.GET.get('id',None);
 
-        items = addItemToCart(items,{
-                'id' : 1,
-                'name':'Burger',
-                'description':'Veg Burger',
-                'restaurantName':'McDonald\'s',
-                'price':233,
-                'quantity':2,
+    if id:
+        try:
+            items = request.session.get('items',[])
+            itemToAdd = MenuItem.objects.filter(active=True,id=id)
 
-                })
-        request.session['items'] = items
-        return render(request,'cart.html',processData(request,data))
+            
+            if itemToAdd and itemToAdd.values() and itemToAdd.values()[0]:
+                items = addItemToCart(items,itemToAdd.values()[0])
+                request.session['items'] = items
+                newItem = itemToAdd.values()[0]
+                messages.error(request, newItem['name'] + " added to cart")
+
+            else:
+                messages.error(request,"cant find item you have selected")
+
+        except Exception as e:
+            print(e)
+            messages.error(request,"an error occured. please try again")
+
     else:
-        return redirect('cart')
+        messages.error(request,"Please select item to add to cart")
+
+    return redirect(request.META.get('HTTP_REFERER', 'cart'))
 
 
 def removeFromCart(request):

@@ -54,7 +54,7 @@ body {
 {% block content %}
 
 <div class="main-container">
-<form class="form-signin" action="{% url 'login' %}" method="post">
+<form class="form-signin" action="{% url 'login' %}?next={{next}}" method="post">
   {% csrf_token %}
   {% if account_type %}
     <input type='hidden' value="{{account_type}}" name="account_type">

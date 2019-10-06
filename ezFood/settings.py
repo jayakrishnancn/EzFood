@@ -127,3 +127,7 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+LOGIN_URL= 'login'
+LOGIN_REDIRECT_URL='home'
+DEFAULT_IMAGE_PATH = '/media/default.svg'
