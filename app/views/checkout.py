@@ -1,9 +1,10 @@
+from django.db import transaction
 from django.shortcuts import render, redirect
 from ezFood.utils import processData, toId, getRole
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from app.models import Restaurant, MenuItem, Orders
+from app.models import Restaurant, MenuItem, Order
 
 # Create your views here 
 @login_required
@@ -17,10 +18,24 @@ def checkout(request):
     if not items or len(items) <= 0: 
         messages.error(request,'please select atleast one item')
         return redirect('cart')
-
-    for item in items:
-        pass
-
-    messages.info(request,'successfully placed order')
-    return redirect('home')
     
+    placedOrders = []
+    
+    try:
+        with transaction.atomic():
+            for item in items:
+                menuItem = MenuItem.objects.filter(id=item['id']).first()
+
+                orderDetails = Order.objects.create(user=request.user,item=menuItem,quantity=item['quantity'])
+                placedOrders.append(orderDetails)
+                
+    except Exception as e:
+        print(e)
+        placedOrders = []
+        messages.error(request,"cant place order please try again")
+        return redirect('cart')
+    
+    request.session['items'] = []
+
+    messages.info(request,'successfully placed '+str(len(placedOrders))+' order(s)')
+    return redirect('home')

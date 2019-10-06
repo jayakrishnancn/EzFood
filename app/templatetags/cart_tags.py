@@ -32,3 +32,6 @@ def calculateTotalQuantity(items):
         total = total + item['quantity']
 
     return total
+@register.filter
+def multiply(qty, unit_price, *args, **kwargs):
+    return qty * unit_price

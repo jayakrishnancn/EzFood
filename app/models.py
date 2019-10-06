@@ -43,11 +43,14 @@ class Restaurant(models.Model):
         # do something with the book
 
         return restaurant
-class Orders(models.Model):
+class Order(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
     delivered = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.user.username + " ordered " + str(self.quantity) + " " + self.item.name + " with id" + str(self.item.id) + " and  is deleverted:" + str(self.delivered) 
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
