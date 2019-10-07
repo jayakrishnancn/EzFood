@@ -9,7 +9,8 @@
       <th scope="col">Item</th>
       <th scope="col">Quantity</th>
       <th scope="col">Price</th>
-      <th scope="col">total</th>
+      <th scope="col">Total</th>
+      <th scope="col">Status</th>
     </tr>
   </thead>
   <tbody>
@@ -21,6 +22,7 @@
         <td>{{item.quantity }}</td>
         <td>{{item.item.price| floatformat:2}}</td>
         <td>{{item.item.price|multiply:item.quantity| floatformat:2 }}</td>
+        <td>{{item.delivered | yesno:"Delivered,Pending" }}</td>
       </tr>
   {% endfor %}
   </tbody>
