@@ -10,7 +10,7 @@ class Profile(models.Model):
     role = models.CharField(max_length=20,default="normal")
 
     def __str__(self):
-        return self.role
+        return self.user.username + " " + self.role 
 
 class MenuItem(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -48,9 +48,14 @@ class Order(models.Model):
     item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
     delivered = models.BooleanField(default=False)
-
+    rider = models.ForeignKey(User,on_delete=models.SET_NULL,related_name="delivery_guy",null=True,default=None)
+    orderId = models.IntegerField(null=False)
+    id = models.AutoField(primary_key=True)
+    total_price = models.DecimalField(default=0.0,max_digits=10,decimal_places=2)
+    deliveredOn = models.DateTimeField(blank=True,null=True,default=None)
+    
     def __str__(self):
-        return self.user.username + " ordered " + str(self.quantity) + " " + self.item.name + " with id" + str(self.item.id) + " and  is deleverted:" + str(self.delivered) 
+        return str(self.orderId) + " of "+self.user.username + " ordered " + str(self.quantity) + " " + self.item.name + " with id" + str(self.item.id) + " and  is deleverted:" + str(self.delivered) 
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

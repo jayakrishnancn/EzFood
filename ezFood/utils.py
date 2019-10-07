@@ -1,4 +1,5 @@
 import random 
+from decimal import Decimal
 from django.shortcuts import render, redirect as re
 
 def processData(request=None,data=None):
@@ -45,3 +46,13 @@ def getRole(request,method=None):
         return role
     return 'normal'
  
+def getTotalFromOrder(items):
+
+    total = 0
+    for item in items:
+        try:
+            total += item['price']
+        except Exception as e:
+            pass
+
+    return Decimal(total)

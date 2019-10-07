@@ -19,13 +19,11 @@
   <a href="{% url 'order_history'%}" class="list-group-item list-group-item-action">Order History</a>
 </div>
 {% elif user.profile.role == 'rider'%}
-{% else %}
 
 <div class="list-group">
-  <a href="{% url 'profile'%}" class="list-group-item list-group-item-action">
-   Account settings
-  </a>
-  <a href="{% url 'profile'%}" class="list-group-item list-group-item-action">My Orders</a>
-  <a href="{% url 'profile'%}" class="list-group-item list-group-item-action">Order History</a>
+  <a href="{% url 'get_order'%}" class="list-group-item list-group-item-action">Get Order</a>
+  <a href="{% url 'delivery_history'%}" class="list-group-item list-group-item-action">Order History</a>
 </div>
+{% else %}
+
 {% endif  %}

@@ -1,6 +1,6 @@
 from django.db import transaction
 from django.shortcuts import render, redirect
-from ezFood.utils import processData, toId, getRole
+from ezFood.utils import processData, toId, getRole, getTotalFromOrder
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -23,10 +23,11 @@ def checkout(request):
     
     try:
         with transaction.atomic():
+            orderId  = Order.objects.all().count() + 1
+            total_price = getTotalFromOrder(items)
             for item in items:
                 menuItem = MenuItem.objects.filter(id=item['id']).first()
-
-                orderDetails = Order.objects.create(user=request.user,item=menuItem,quantity=item['quantity'])
+                orderDetails = Order.objects.create(user=request.user,item=menuItem,quantity=item['quantity'],orderId=orderId,deliveredOn=None,total_price=total_price)
                 placedOrders.append(orderDetails)
                 
     except Exception as e:

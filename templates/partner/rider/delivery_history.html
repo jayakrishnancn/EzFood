@@ -1,0 +1,29 @@
+{% extends 'user/profile.html' %}
+{% load cart_tags %}
+{% block dashboardContent %}
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Order ID</th>
+      <th scope="col">Delivered?</th>
+      <th scope="col">Delivered On</th>
+      <th scope="col">Benifit</th>
+
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in pendingOrders %}
+      <tr>
+        <th scope="row">{{ forloop.counter}}</th>
+        <td>{{item.orderId  }}</td>
+        <td>{{item.delivered | yesno:"yes,no" }}</td>
+        <td>{{item.deliveredOn }}</td>
+        <td> {{ item.total_price | calculateCharges }}
+      </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% endblock dashboardContent %}

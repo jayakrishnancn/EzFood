@@ -25,5 +25,10 @@ urlpatterns = [
     path('revenue', views.revenue, name='revenue' ),
     path('order-history', views.orderHistory, name='order_history' ),
     
+    path('get-order', views.getOrder, name='get_order' ),
+    path('take-for-delivery', views.takeForDelivery, name='take_for_delivery' ),
+    path('complete-delivery', views.completeDelivery, name='complete_delivery' ),
+    path('delivery-history', views.deliveryHistory, name='delivery_history' ),
+
     path('checkout', views.checkout, name='checkout' ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -32,8 +32,8 @@
     <a class="p-2 text-dark" href="{% url 'offers' %}">Offers</a>
     <a class="p-2 text-dark" href="{% url 'support' %}">Support</a>
      
-    {% if user.is_authenticated and user.first_name  %}
-          <a class="p-2 text-dark" href="{% url 'profile' %}">{{user.first_name | title}}</a>
+    {% if user.is_authenticated and user.username  %}
+          <a class="p-2 text-dark" href="{% url 'profile' %}">{{user.username | title}}</a>
           <a class="p-2 text-dark" href="{% url 'logout' %}">logout</a>
 
     {% else %}

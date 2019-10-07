@@ -1,0 +1,33 @@
+{% extends 'user/profile.html' %}
+{% load cart_tags %}
+{% block dashboardContent %}
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Order ID</th>
+      <th scope="col">Delivery charge</th>
+      <th scope="col">Delivered?</th>
+      <th scope="col">Action</th>
+
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in pendingOrders %}
+      <tr>
+        <th scope="row">{{ forloop.counter}}</th>
+        <td>{{item.orderId  }}</td>
+        <td>{{item.total_price | calculateCharges }}</td>
+        <td>{{item.delivered | yesno }}</td>
+        {% if  item.rider.username == user.username %}
+          <td> <a href="{% url 'complete_delivery'%}?id={{item.orderId}}" class="btn btn-danger">Delivery complated</a> </td>    
+        {% else %}
+          <td> <a href="{% url 'take_for_delivery'%}?id={{item.orderId}}" class="btn btn-success">Take for Delivery</a> </td>
+        {% endif %}
+      </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% endblock dashboardContent %}
