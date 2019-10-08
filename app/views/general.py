@@ -145,7 +145,7 @@ def addToCart(request):
 
     return redirect(request.META.get('HTTP_REFERER', 'cart'))
 
-
+@login_required
 def removeFromCart(request):
     data = {'title' : 'Remove Item From Cart'}
 

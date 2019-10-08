@@ -5,23 +5,22 @@
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th scope="col">#</th>
+      <th scope="col">order Id</th>
       <th scope="col">Item</th>
       <th scope="col">Quantity</th>
       <th scope="col">Price</th>
-      <th scope="col">Total</th>
       <th scope="col">Status</th>
     </tr>
   </thead>
   <tbody>
-  {% for item in current %}
+  {% for order in orders %}
+  
       <tr>
-        <th scope="row">{{ forloop.counter}}</th>
-        <td>{{item.item.name }}</td>
-        <td>{{item.quantity }}</td>
-        <td>{{item.item.price| floatformat:2}}</td>
-        <td>{{item.item.price|multiply:item.quantity| floatformat:2 }}</td>
-        <td>{{item.delivered | yesno:"Delivered,Pending" }}</td>
+        <td>{{order.order.id }}</td>
+        <td>{{order.item.name }}</td>
+        <td>{{order.quantity }}</td>
+        <td>{{order.item.price }}</td>
+        <td>{{order.order.delivered | yesno:"Delivered,Pending" }}</td>
       </tr>
   {% endfor %}
   </tbody>

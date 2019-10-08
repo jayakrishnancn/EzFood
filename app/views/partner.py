@@ -147,7 +147,7 @@ def revenue(request):
     return render(request,'partner/owner/revenue.html',processData(request,data))
 
 @login_required
-def orderHistory(request):
+def ownerHistory(request):
     data = {'title': 'Previous orders '}
 
     if request.method == "POST":
@@ -155,7 +155,6 @@ def orderHistory(request):
         return redirect('order_history')
 
     data['history'] = Order.objects.filter(delivered=True)
-    data['current'] = Order.objects.filter(delivered=False)
 
     print(data)
     return render(request,'partner/owner/order_history.html',processData(request,data))

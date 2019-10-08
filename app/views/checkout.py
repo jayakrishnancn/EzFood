@@ -28,7 +28,7 @@ def checkout(request):
 
             for item in items:
                 menuItem = MenuItem.objects.filter(id=item['id']).first()
-                OrderedItem.objects.create(item=menuItem,quantity=item['quantity'],orderId=orderDetails)
+                OrderedItem.objects.create(item=menuItem,quantity=item['quantity'],order=orderDetails)
                 placedOrdersCount+=1
                 
     except Exception as e:
