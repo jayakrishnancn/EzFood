@@ -17,7 +17,7 @@
   {% for item in pendingOrders %}
       <tr>
         <th scope="row">{{ forloop.counter}}</th>
-        <td>{{item.orderId  }}</td>
+        <td>{{item.id  }}</td>
         <td>{{item.delivered | yesno:"yes,no" }}</td>
         <td>{{item.deliveredOn }}</td>
         <td> {{ item.total_price | calculateCharges }}
