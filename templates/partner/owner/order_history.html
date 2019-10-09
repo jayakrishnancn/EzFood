@@ -1,29 +1,68 @@
 {% extends 'user/profile.html' %}
 {% load cart_tags %}
-{% block dashboardContent %}
+{% block dashboardContentParent %}
 
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th scope="col">order Id</th>
-      <th scope="col">Item</th>
-      <th scope="col">Quantity</th>
-      <th scope="col">Price</th>
-      <th scope="col">Status</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for order in orders %}
-  
+{% for order in orders %}
+  <div class="card mt-3 p-3 shadow-sm">
+
+  {% if order.delivered %}
+
+  <div class="badge badge-success d-flex p-2 no-round">
+    <span class="text-left mr-auto"># {{order.id}}</span>
+    <span class="text-left ml-auto">Delivered by {{ order.rider | title}}  on {{order.deliveredOn}}</span>
+  </div>
+
+  {% else %}
+
+  <div class="badge badge-danger d-flex p-2 no-round">
+    <span class="text-left mr-auto"># {{order.id}}</span>
+    {% if not order.rider %}
+      <span class="text-left ml-auto">
+        Pending 
+      </span>
+    {% else %}
+      <span class="text-left ml-auto">
+        {{ order.rider | title }} is on the way with your food order  
+      </span>
+    {% endif %}
+  </div>
+
+  {% endif %}
+
+  <table class="table table-bordered">
+    <thead>
       <tr>
-        <td>{{order.order.id }}</td>
-        <td>{{order.item.name }}</td>
-        <td>{{order.quantity }}</td>
-        <td>{{order.item.price }}</td>
-        <td>{{order.order.delivered | yesno:"Delivered,Pending" }}</td>
+        <th scope="col">#</th>
+        <th scope="col">Item</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quanity</th>
       </tr>
-  {% endfor %}
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+    {% for item in order.items %}
 
-{% endblock dashboardContent %}
+        <tr>
+          <td>{{forloop.counter }}</td>
+          <td>{{item.item.name }}</td>
+          <td>{{item.item.price }}</td>
+          <td>{{item.quantity }}</td>
+        </tr>
+    {% endfor %}
+    <tr>
+      <td>Total</td>
+      <td colspan="3" class="text-right">{{order.total  }}</td>
+    </tr>
+    <tr>
+      <td>Delivery Charge</td>
+      <td colspan="3" class="text-right">{{order.total | calculateCharges }}</td>
+    </tr>
+    <tr>
+      <td>Grand Total</td>
+      <td colspan="3" class="text-right">{{order.total | calculateCharges:"total" }}</td>
+    </tr>
+    </tbody>
+  </table>
+  </div>
+{% endfor %}
+
+{% endblock dashboardContentParent %}
