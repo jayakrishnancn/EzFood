@@ -131,7 +131,7 @@ def addToCart(request):
                 items = addItemToCart(items,itemToAdd.values()[0])
                 request.session['items'] = items
                 newItem = itemToAdd.values()[0]
-                messages.error(request, newItem['name'] + " added to cart")
+                messages.error(request, newItem['name'] + " added to cart please 'proceed to checkout' from your cart to finish your order")
 
             else:
                 messages.error(request,"cant find item you have selected")
