@@ -24,6 +24,7 @@ urlpatterns = [
     path('delete-menu', views.deleteMenu, name='delete_menu' ),
     path('revenue', views.revenue, name='revenue' ),
     path('order-history', views.orderHistory, name='order_history' ),
+    path('owner-history', views.ownerHistory, name='owner_history' ),
     
     path('get-order', views.getOrder, name='get_order' ),
     path('take-for-delivery', views.takeForDelivery, name='take_for_delivery' ),

@@ -5,7 +5,7 @@ from ezFood.utils import processData, toId, getRole
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from app.models import Restaurant, MenuItem ,Order
+from app.models import Restaurant, MenuItem ,Order,OrderedItem
 
 # Create your views here 
 @login_required
@@ -144,6 +144,13 @@ def revenue(request):
     if request.method == "POST":
         messages.error(request,"cant save. please try again or conact admin")
         return redirect('revenue')
+    items =  OrderedItem.objects.filter(item__user = request.user)
+    revenue = 0
+    for i in items:
+        revenue += i.item.price * i.quantity
+
+    data['revenue'] = revenue
+
     return render(request,'partner/owner/revenue.html',processData(request,data))
 
 @login_required
@@ -154,7 +161,13 @@ def ownerHistory(request):
         messages.error(request,"cant save. please try again or conact admin")
         return redirect('order_history')
 
-    data['history'] = Order.objects.filter(delivered=True)
+    o =  OrderedItem.objects.filter(item__user = request.user)
+    history = ()
+    for i in o:
+        history.append(i)
+        print(i.item)
 
-    print(data)
+    data['history'] = history
+
+    print(history)
     return render(request,'partner/owner/order_history.html',processData(request,data))
