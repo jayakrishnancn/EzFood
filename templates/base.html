@@ -22,10 +22,10 @@
     {% block header %}
     <div class="border-bottom">
  <div class="d-flex max-900 flex-column flex-md-row align-items-center pt-3 px-md-4 mb-3 bg-light">
- <a class="navbar-brand" href="#">
+ <a class="navbar-brand" href="{% url 'home' %}">
     <img src="{% static 'images/' %}{{img.logo}}" width="30" height="30" alt="">
   </a>
-  <h5 class="my-0 mr-md-auto font-weight-normal">{{ companyName  }}</h5>
+  <h5 class="my-0 mr-md-auto font-weight-normal"><a href="{% url 'home' %}" style="text-secondary">{{ companyName  }}</a></h5>
   <nav class="my-2 my-md-0 mr-md-3">
     {% if user.profile.role == 'normal' %}
     <a class="p-2 text-dark" href="{% url 'home' %}">Home</a>
