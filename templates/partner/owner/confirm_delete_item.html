@@ -1,6 +1,6 @@
 {% extends 'user/profile.html' %}
 {% load static %}
-{% block dashboardContent_parent %}
+{% block dashboardContentParent %}
 <form class="needs-validation" class="text-center" method="post" action="{% url 'delete_menu'  %}">
     {% csrf_token %}
       <div class="card mb-4 shadow-sm mx-auto" style="width: 18rem;">
@@ -18,4 +18,4 @@
         </div>
     </div>
 </form>
-{% endblock dashboardContent_parent %}
+{% endblock dashboardContentParent %}

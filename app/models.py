@@ -55,12 +55,12 @@ class Order(models.Model):
 
 
 class OrderedItem(models.Model):
-    orderId = models.ForeignKey(Order,on_delete=models.CASCADE,related_name="order_id")
+    order = models.ForeignKey(Order,on_delete=models.CASCADE,related_name="order_id")
     item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
 
     def __str__(self):
-        return str(self.orderId)+ " q: "+ str(self.quantity) + " : " + str(self.id)
+        return str(self.order.id)+ " q: "+ str(self.quantity) + " : " + str(self.id)
     
 
 @receiver(post_save, sender=User)

@@ -25,5 +25,7 @@
   <a href="{% url 'delivery_history'%}" class="list-group-item list-group-item-action">Order History</a>
 </div>
 {% else %}
-
+<div class="list-group">
+  <a href="{% url 'order_history'%}" class="list-group-item list-group-item-action">Order History</a>
+</div>
 {% endif  %}

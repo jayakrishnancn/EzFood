@@ -27,11 +27,12 @@
   </a>
   <h5 class="my-0 mr-md-auto font-weight-normal">{{ companyName  }}</h5>
   <nav class="my-2 my-md-0 mr-md-3">
+    {% if user.profile.role == 'normal' %}
     <a class="p-2 text-dark" href="{% url 'home' %}">Home</a>
     <a class="p-2 text-dark" href="{% url 'specials' %}">Specials</a>
     <a class="p-2 text-dark" href="{% url 'offers' %}">Offers</a>
     <a class="p-2 text-dark" href="{% url 'support' %}">Support</a>
-     
+  {% endif %}     
     {% if user.is_authenticated and user.username  %}
           <a class="p-2 text-dark" href="{% url 'profile' %}">{{user.username | title}}</a>
           <a class="p-2 text-dark" href="{% url 'logout' %}">logout</a>
@@ -47,10 +48,12 @@
    
 
     </nav>      
+    {% if user.profile.role == 'normal'%}
       <div class="btn-group" role="group">          
         <a class="btn btn-warning round" href="{% url 'cart' %}">Cart <i class="fas fa-shopping-cart"></i></a>
         <a class="btn btn-dark round" href="{% url 'cart' %}"> {{ cartItems | calculateTotalQuantity }} </a> 
       </div>
+    {% endif %}
     </div>
     </div>
     {% endblock %}
