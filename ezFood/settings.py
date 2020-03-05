@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
     'app',
 ]
 
@@ -63,6 +64,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends', # add this
+                'social_django.context_processors.login_redirect', # add this
             ],
         },
     },
@@ -131,3 +134,50 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_URL= 'login'
 LOGIN_REDIRECT_URL='home'
 DEFAULT_IMAGE_PATH = '/media/default.svg'
+
+"""AUTHENTICATION_BACKENDS = [
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+    'social.backends.google.GoogleOAuth2',
+    'social.backends.twitter.TwitterOAuth',
+]
+ 
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+SOCIAL_AUTH_FACEBOOK_KEY = "241862520164056"          # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = "1a35d2ff20c6180fcd2fd130b8a4847d"       # App Secret
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_link'] # add this
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {       # add this
+  'fields': 'id, name, email, picture.type(large), link'
+}
+SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [                 # add this
+    ('name', 'name'),
+    ('email', 'email'),
+    ('picture', 'picture'),
+    ('link', 'profile_url'),
+]
+
+
+SOCIAL_AUTH_TWITTER_KEY =""
+SOCIAL_AUTH_TWITTER_SECRET =""
+
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/home/'
+SOCIAL_AUTH_LOGIN_URL = '/'
+"""
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        },
+    },
+}

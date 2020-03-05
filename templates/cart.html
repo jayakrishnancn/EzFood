@@ -54,6 +54,7 @@
                 </div>
                 <span class="text-muted"><i class="fas fa-rupee-sign"></i> {{ cartItems | calculatePrice:'total' }} </span>
                 </li>
+
                 <li class="list-group-item d-flex justify-content-between lh-condensed">
                 <div>
                     <h6 class="my-0">Delivery</h6> 
@@ -61,14 +62,39 @@
                 <span class="text-muted"><i class="fas fa-rupee-sign"></i> {{ cartItems | calculatePrice:'total_delivery' }} </span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Discount</h6> 
+                    </div>
+                    <span class="text-muted"><i class="fas fa-rupee-sign"></i> 
+                        {{ cartItems | calculatePrice:'discount' }} 
+                        ( {{ cartItems | calculatePrice:'coupon' }} %) 
+                    </span>
+                </li>
+ 
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
                 <div>
                     <h6 class="my-0">Total Payable</h6> 
                 </div>
                 <span class="text-muted"><i class="fas fa-rupee-sign"></i> {{ cartItems | calculatePrice:'payable' }}</span>
                 </li>
-                
+                <li class="list-group-item">
+                    {%   if  appliedCoupon   %}
+                        <form action="{% url 'applycoupon' %}" method="post">
+                            <div class="input-group">
+                                <input type="text" name="id" class="form-control" placeholder="Coupon" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    {% csrf_token %}
+                                    <button class="btn btn-success" type="submit">Apply Coupon</button>
+                                </div>                    
+                            </div>    
+                        </form>
+                    {% else %}
+                        <a href="{% url 'removecoupon'%}" class="btn btn-danger">Remove Coupon</a>
+                    {% endif %}
+                    </li>
                 <form class="card p-2" action="{% url 'checkout' %}" method="post">
                 {% csrf_token %}
+                
                         <button type="submit" class="btn round btn-danger">Proceed to checkout</button>
                 </form>
             </ul> 

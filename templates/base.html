@@ -11,7 +11,20 @@
     <link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'bower_components/components-font-awesome/css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'styles/style.css' %}"> 
-    
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.9.0/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/7.9.0/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.9.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.9.0/firebase-firestore.js"></script>
+
+     <!-- Previously loaded Firebase SDKs -->
+
     {% endblock %}
     <style>
     {% block style %}
@@ -72,37 +85,13 @@
     {% endblock %}
     
     {% block footer %}
-        <footer class="container pt-4 my-md-5 pt-md-5 border-top">
+        <footer class="container pt-4 my-md-5 pt-md-5 border-top text-center">
     <div class="row">
       <div class="col-12 col-md">
         <img class="mb-2" src="{% static 'images/' %}{{img.logo}}" alt="" width="24" height="24">
         <small class="d-block mb-3 text-muted">© 2017-2019</small>
       </div>
-      <div class="col-6 col-md">
-        <h5>Features</h5>
-        <ul class="list-unstyled text-small">
-          <li><a class="text-muted" href="#">Cool stuff</a></li>
-          <li><a class="text-muted" href="{% url 'partner_with_us' %}">Partner With Us</a></li>
-        </ul>
-      </div>
-      <div class="col-6 col-md">
-        <h5>Resources</h5>
-        <ul class="list-unstyled text-small">
-          <li><a class="text-muted" href="#">Resource</a></li>
-          <li><a class="text-muted" href="#">Resource name</a></li>
-          <li><a class="text-muted" href="#">Another resource</a></li>
-          <li><a class="text-muted" href="#">Final resource</a></li>
-        </ul>
-      </div>
-      <div class="col-6 col-md">
-        <h5>About</h5>
-        <ul class="list-unstyled text-small">
-          <li><a class="text-muted" href="#">Team</a></li>
-          <li><a class="text-muted" href="#">Locations</a></li>
-          <li><a class="text-muted" href="#">Privacy</a></li>
-          <li><a class="text-muted" href="#">Terms</a></li>
-        </ul>
-      </div>
+      
     </div>
   </footer>
         

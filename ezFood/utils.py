@@ -8,7 +8,10 @@ def processData(request=None,data=None):
     }  
      
     cartItemsFromSession = request.session.get('items', {})
-    appData = {'companyName':'Ez Food','errorQuote':randomErrorQuotes(),'img':img,'cartItems':cartItemsFromSession }
+    appliedCoupon = False,
+    for item in cartItemsFromSession:
+        print(item)
+    appData = {'appliedCoupon':appliedCoupon,'companyName':'Ez Food','errorQuote':randomErrorQuotes(),'img':img,'cartItems':cartItemsFromSession }
 
     if(data is None):
         data = {}    

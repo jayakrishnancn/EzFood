@@ -6,8 +6,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from app.models import Restaurant, MenuItem
+from app.models import Restaurant, MenuItem , Coupon
+import logging
 
+logger = logging.getLogger(__name__)
 # Create your views here 
 
 def home(request):
@@ -16,7 +18,16 @@ def home(request):
     if items and items.count() > 0 :
         data['menuItems'] = items
     
-    return render(request,'index.html',processData(request,data))
+    data  = processData(request,data)
+
+    for  mItem in items:
+        print(mItem.id)
+        for cItem in data['cartItems']:
+            if(mItem.id == cItem['id']):
+                mItem.quantity = cItem['quantity'] 
+                
+        
+    return render(request,'index.html',data)
 
 def logoutUser(request):
     auth.logout(request)
@@ -114,13 +125,17 @@ def support(request):
 def cart(request):
     data = {'title' : 'Shopping Cart'}
     
+    # logger.warning("Your log message is here")
+    # logger.warning(processData(request,data))
+    # logger.info("pppppppppppppppppppp")
     return render(request,'cart.html',processData(request,data))
 
 
 @login_required
 def addToCart(request):
     id = request.GET.get('id',None);
-
+    count = request.GET.get('count',1)
+    
     if id:
         try:
             items = request.session.get('items',[])
@@ -128,7 +143,7 @@ def addToCart(request):
 
             
             if itemToAdd and itemToAdd.values() and itemToAdd.values()[0]:
-                items = addItemToCart(items,itemToAdd.values()[0])
+                items = addItemToCart(items,itemToAdd.values()[0],count)
                 request.session['items'] = items
                 newItem = itemToAdd.values()[0]
                 messages.error(request, newItem['name'] + " added to cart please 'proceed to checkout' from your cart to finish your order")
@@ -188,3 +203,42 @@ def dashboard(request):
 def partnerWithUs(request):
     data = {'title' : 'Partner with us'}
     return render(request,'partner/select.html',processData(request,data))
+
+@login_required
+def applyCoupon(request):
+
+    id = request.POST.get('id',None)
+    if not id:
+        messages.error(request,'Invalid Coupon')
+        redirect('cart')
+    logger.warning("Your log message is here")
+    
+    logger.warning(id)
+    coupon = Coupon.objects.filter(couponKey=id)
+    if not coupon.exists():
+        return redirect('cart')
+    couponItem = Coupon.objects.filter(couponKey=id).first()    
+
+    logger.warning(couponItem)    
+    if not couponItem  : 
+        messages.error(request,'Invalid Coupon')
+        redirect('cart')
+
+    couponId = couponItem.price
+
+    items = request.session.get('items',[])
+    for item in items:
+        item['coupon'] = couponId
+    
+    request.session['items'] = items
+    return redirect('cart')
+
+@login_required
+def removeCoupon(request):
+
+    items = request.session.get('items',[])
+    for item in items:
+        item['coupon'] = 0
+    
+    request.session['items'] = items
+    return redirect('cart')
