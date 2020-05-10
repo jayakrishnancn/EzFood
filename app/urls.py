@@ -17,6 +17,8 @@ urlpatterns = [
     path('profile', views.profile, name='profile' ),
     path('dashboard', views.dashboard, name='dashboard' ),
     path('partner-with-us', views.partnerWithUs, name='partner_with_us' ),
+    path('apply-coupon', views.applyCoupon, name='applycoupon' ),
+    path('remove-coupon', views.removeCoupon, name='removecoupon' ),
 
     path('restaurant-details', views.restaurantDetails, name='restaurant_details' ),
     path('add-menu', views.addMenu, name='add_menu' ),

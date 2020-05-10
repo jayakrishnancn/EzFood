@@ -62,6 +62,13 @@ class OrderedItem(models.Model):
     def __str__(self):
         return str(self.order.id)+ " q: "+ str(self.quantity) + " : " + str(self.id)
     
+class Coupon(models.Model):
+    id = models.AutoField(primary_key=True)
+    price = models.IntegerField(default=100)
+    couponKey =  models.CharField(max_length = 10)
+    def __str__(self):
+        return str(self.id) + ": percent" + str(self.price)
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

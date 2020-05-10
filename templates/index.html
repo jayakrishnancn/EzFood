@@ -1,35 +1,51 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="album py-5">
-    
-{% if menuItems is  None %}
-    <div class="text-center"> {{errorQuote}}</div>
-{% endif %}
-    <div class="container"> 
-        <div class="row"> 
 
-        {% for item in menuItems %} 
-        <div class="col-md-4">
-            <div class="card mb-3 shadow-sm">
-                {% if  item.image %}
-                <div class="d-block img-fixed" style="background:url('{{item.image.url}}');background-size:cover">&nbsp;</div>
-                {% else %}
-                <div class="d-block img-fixed" style="background:url('/media/default.svg');background-size:cover">&nbsp;</div>
-                {% endif %}
-            <div class="card-body">
-                <p class="card-text">{{item.name | title}}</p>
-                <p class="text-secondary">{{item.user.restaurant.name | title}}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                <div class="p-2 badge badge-dark">{{item.price}} <i class="fas fa-rupee-sign"></i></div>
-                <div class="btn-group">
+    {% if menuItems is  None %}
+    <div class="text-center"> {{errorQuote}}</div>
+    {% endif %}
+    <div class="container">
+        <div class="row">
+
+            {% for item in menuItems %}
+            <div class="col-md-4">
+                <div class="card mb-3 shadow-sm">
+                    {% if  item.image %}
+                    <div class="d-block img-fixed" style="background:url('{{item.image.url}}');background-size:cover">
+                        &nbsp;</div>
+                    {% else %}
+                    <div class="d-block img-fixed" style="background:url('/media/default.svg');background-size:cover">
+                        &nbsp;</div>
+                    {% endif %}
+                    <div class="card-body">
+                        <p class="card-text">{{item.name | title}}</p>
+                        <p class="text-secondary">{{item.user.restaurant.name | title}}</p>
+                        <div style="display: flex;align-items: center;"
+                            class="d-flex justify-content-between align-items-center">
+                            <div class="p-2 badge badge-dark">{{item.price}} <i class="fas fa-rupee-sign"></i></div>
+                            <!-- <div class="btn-group">
+                    <input type="number" class="form-control" style="width:60px;border-radius: 3px 0 0 3px  ;" />
                     <a href="{% url 'addItemToCart' %}?id={{item.id}}" class="btn btn-sm btn-warning">Add To Cart</a>
-                </div>
-                
+                </div> -->
+                            <form action="{% url 'addItemToCart' %}">
+                                <input type="hidden" value="{{item.id}}" name="id" />
+                                <div class="input-group" style="width:150px;border-radius: 3px 0 0 3px  ;">
+                                    {% if item.quantity > 0   %}
+                                    <input type="number" name="count" value="{{ item.quantity}}" class="form-control">
+                                    {% else %}
+                                    <input type="number" name="count" value="0" class="form-control">
+                                    {% endif %}
+                                    <div class="input-group-append">
+                                        <button class="btn btn-warning" type="submit">Add</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-            </div>
-        </div> 
-        {% endfor %}
+            {% endfor %}
 
         </div>
     </div>

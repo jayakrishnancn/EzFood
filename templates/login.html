@@ -71,7 +71,14 @@ body {
     <button class="btn btn-lg btn-warning btn-block" type="submit">
         Sign in
     </button>
-   <a class="btn btn-link  btn-sm mt-4" href="{% url 'signup' %}" role="button">Create an account</a>
+    <hr/><h4>OR</h4>    
+    <div class="d-flex" style="justify-content: stretch;align-items: stretch;flex-direction: column;">
+      <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-primary">Login with Facebook</a>
+      <a href="{% url 'social:begin' 'google' %}" class="btn my-3 btn-danger">Login with Google</a>
+      <a href="{% url 'social:begin' 'twitter' %}" class="btn btn-secondary">Login with Twitter</a>
+    </div> 
+  <hr/>
+    <a class="btn btn-link  btn-sm mt-4" href="{% url 'signup' %}" role="button">Create an account</a>
     <p class="mt-5 mb-3 text-muted">© 2017-2019</p>
 </form>
 </div>
