@@ -92,9 +92,9 @@
                         <a href="{% url 'removecoupon'%}" class="btn btn-danger">Remove Coupon</a>
                     {% endif %}
                     </li>
-                <form class="card p-2" action="{% url 'checkout' %}" method="post">
+                <form class="card p-2" action="{% url 'payments' %}" method="post">
                 {% csrf_token %}
-                
+                    <input value="{{ cartItems | calculatePrice:'payable' }}" type="hidden" name="total_amount"/>
                         <button type="submit" class="btn round btn-danger">Proceed to checkout</button>
                 </form>
             </ul> 

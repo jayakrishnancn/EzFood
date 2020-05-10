@@ -49,6 +49,7 @@ class Order(models.Model):
     rider = models.ForeignKey(User,on_delete=models.SET_NULL,related_name="delivery_guy",null=True,default=None)
     total_price = models.DecimalField(default=0.0,max_digits=10,decimal_places=2)
     deliveredOn = models.DateTimeField(blank=True,null=True,default=None)
+    offers =  models.DecimalField(default=0.0,max_digits=10,decimal_places=2)
     
     def __str__(self):
         return self.user.username + " ordered  and  is deleverted " + str(self.delivered)

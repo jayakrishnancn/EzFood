@@ -57,5 +57,21 @@ def getTotalFromOrder(items):
             total += item['price'] * item['quantity']
         except Exception as e:
             pass
-
+    print("get total 1")
+    try:
+        if total > 0 and items[0] and items[0]['coupon']:
+            print("get total 2")
+            coupon = items[0]['coupon']
+            total_with_disc = total * coupon / 100
+            print("get total 3")
+            total_with_disc = total - total_with_disc 
+            print("get total 4")
+            if total_with_disc >= 0 :
+                print("get total 5")
+                total = total_with_disc
+                print (' printing discounted price '+ str(total) )
+            print("get total 6")
+    except Exception as e:
+        print(e)
+    print("get total final")
     return Decimal(total)

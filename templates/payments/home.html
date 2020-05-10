@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container text-center mt-4">
+        <div class="row">
+            <div class="col-12">
+                <h2>Confirm payment for  {{ currency }} {{amount_rs}}</h2>
+                <form action="{% url 'checkout' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{amount}}" name="total_amount"/>
+                    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                            data-key="{{ key }}"
+                            data-description="A Django Charge"
+                            data-amount="{{ amount }}"
+                            data-currency="{{ currency }}"
+                            data-locale="auto"></script>
+                  </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

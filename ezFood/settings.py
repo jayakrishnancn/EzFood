@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'social_django',
     'app',
+    'payments.apps.PaymentsConfig',
 ]
 
 MIDDLEWARE = [
@@ -181,3 +182,10 @@ LOGGING = {
         },
     },
 }
+
+
+
+
+# stripe 
+STRIPE_SECRET_KEY = 'sk_test_p9PyHOZEDxY3P8ZOa49CHhLA00mVJMykG7'
+STRIPE_PUBLISHABLE_KEY = 'pk_test_daqXs6wna0dUybTpkWBy2l05'
